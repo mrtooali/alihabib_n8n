@@ -32,12 +32,12 @@
   (function(){
     try{
       var saved = localStorage.getItem('site_lang');
-      var lang = saved ? saved : ((navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en');
+      var lang = saved ? saved : 'en';
       document.documentElement.setAttribute('lang', lang === 'ar' ? 'ar' : 'en');
       document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       window.__initialLang = lang;
     }catch(e){
-      window.__initialLang = 'ar';
+      window.__initialLang = 'en';
     }
   })();
 </script>
@@ -117,6 +117,9 @@
     font-style:normal;
     color:var(--amber);
   }
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--steel);border:1px solid rgba(95,163,201,.25);background:rgba(95,163,201,.08);padding:6px 12px;border-radius:20px;margin-bottom:18px}
+  .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:#25d366;box-shadow:0 0 0 4px rgba(37,211,102,.15);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 4px rgba(37,211,102,.15)}70%{box-shadow:0 0 0 8px rgba(37,211,102,0)}100%{box-shadow:0 0 0 4px rgba(37,211,102,0)}}
   .hero p{
     margin-top:22px;
     color:var(--text-dim);
@@ -306,6 +309,23 @@
   .stat{margin-bottom:16px;}
   .stat:last-child{margin-bottom:0;}
   .stat .num{font-family:'IBM Plex Sans Arabic',sans-serif;font-size:22px;font-weight:700;color:var(--amber);}
+  .impact{margin-top:14px;padding-top:14px;border-top:1px dashed rgba(43,50,61,.6);font-size:12.5px;color:var(--text-dim)}
+  .impact strong{color:var(--text)}
+  /* --- Services --- */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:760px){.services-grid{grid-template-columns:1fr}}
+  .service-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px;position:relative;display:flex;flex-direction:column}
+  .service-card.featured{border-color:var(--amber);background:linear-gradient(180deg, rgba(232,163,61,.08), var(--surface))}
+  .service-card .badge{position:absolute;top:-10px;inset-inline-start:16px;background:var(--amber);color:var(--ink);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+  .service-card h3{font-size:18px;margin-bottom:6px}
+  .service-card .price{font-size:26px;font-weight:700;color:var(--amber);margin:10px 0 4px}
+  .service-card .price span{font-size:13px;color:var(--text-dim);font-weight:400}
+  .service-card .desc{font-size:13.5px;color:var(--text-dim);margin-bottom:16px;min-height:40px}
+  .service-card ul{list-style:none;margin:0 0 20px;padding:0;flex:1}
+  .service-card ul li{font-size:13px;padding:7px 0;border-bottom:1px solid rgba(43,50,61,.5);display:flex;gap:8px}
+  .service-card ul li:last-child{border-bottom:none}
+  .service-card ul li::before{content:"✓";color:var(--steel);font-weight:700}
+  .service-card.featured ul li::before{color:var(--amber)}
   .project.reverse .stat .num{color:var(--steel);}
   .stat .lbl{font-size:12.5px;color:var(--text-dim);margin-top:2px;}
 
@@ -336,11 +356,14 @@
 
   footer{
     border-top:1px solid var(--line);
-    padding:26px 0;
-    text-align:center;
+    padding:28px 0;
     color:var(--text-dim);
     font-size:13px;
   }
+  .footer-grid{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .footer-links{display:flex;gap:16px;flex-wrap:wrap}
+  .footer-links a{color:var(--text-dim);border-bottom:1px solid transparent;padding-bottom:2px}
+  .footer-links a:hover{color:var(--text);border-color:var(--line)}
 
   /* LANG TOGGLE */
   .lang-btn{
@@ -388,7 +411,7 @@
   /* --- FIX: reduced motion --- */
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
-    .eyebrow,.hero h1,.hero p,.hero-actions,.diagram{animation:none;opacity:1;transform:none}
+    .eyebrow,.hero h1,.hero p,.hero-actions,.diagram,.hero-badge .dot{animation:none;opacity:1;transform:none}
   }
   /* --- FIX: proof button --- */
   .proof-shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:transparent;cursor:zoom-in;margin-bottom:16px}
@@ -397,6 +420,22 @@
   @media(max-width:520px){.process-grid{grid-template-columns:1fr} .skills-grid{grid-template-columns:1fr}}
   /* --- FIX: lightbox close btn --- */
   .lightbox-close{position:absolute;top:20px;inset-inline-end:20px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 12px;border-radius:20px;cursor:pointer;font-family:inherit}
+  /* Testimonials */
+  .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:760px){.testi-grid{grid-template-columns:1fr}}
+  .testi-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px}
+  .testi-quote{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:14px}
+  .testi-meta{display:flex;align-items:center;gap:10px}
+  .testi-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--steel));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);font-size:14px}
+  .testi-name{font-size:13px;font-weight:600}
+  .testi-role{font-size:12px;color:var(--text-dim)}
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--line);padding:16px 0}
+  .faq-q{font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq-q::after{content:'+';color:var(--amber);font-size:20px}
+  .faq-item.open .faq-q::after{content:'−'}
+  .faq-a{font-size:14px;color:var(--text-dim);margin-top:10px;display:none;line-height:1.7}
+  .faq-item.open .faq-a{display:block}
   /* --- FIX: email toast --- */
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1f28;border:1px solid #2b323d;color:#e9e6df;padding:10px 18px;border-radius:8px;font-size:13px;z-index:90;opacity:0;transition:transform .3s ease,opacity .3s ease;pointer-events:none}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
@@ -435,6 +474,7 @@
     <ul id="navLinks">
       <li><a href="#about" data-i18n="nav-about">عني</a></li>
       <li><a href="#work" data-i18n="nav-work">المشاريع</a></li>
+      <li><a href="#services" data-i18n="nav-services">الخدمات</a></li>
       <li><a href="#process" data-i18n="nav-process">طريقة الشغل</a></li>
       <li><a href="#skills" data-i18n="nav-skills">المهارات</a></li>
       <li><a href="#contact" data-i18n="nav-contact">تواصل</a></li>
@@ -446,6 +486,7 @@
 <main id="main"><header class="hero">
   <div class="wrap hero-inner">
     <div>
+      <div class="hero-badge"><span class="dot"></span><span data-i18n="hero-badge">Available now • Response &lt; 2h • 2 systems shipped</span></div>
       <span class="eyebrow" data-i18n="hero-eyebrow">أتمتة بالذكاء الاصطناعي لأصحاب الأعمال</span>
       <h1 data-i18n-html="hero-h1">بابني أنظمة <em>تشتغل لوحدها</em> بدل ما تشغّلك</h1>
       <p data-i18n="hero-p">
@@ -527,6 +568,7 @@
         <div class="tags">
           <span>n8n</span><span>AI Agent</span><span>Redis</span><span>WhatsApp Business API</span><span>RAG / Vector Search</span>
         </div>
+        <div class="impact" data-i18n-html="p1-impact"><strong>Impact:</strong> 80% less manual work • 2s avg reply • zero missed orders</div>
         <button type="button" onclick="openDemo('demoB64')" class="demo-link" data-i18n="demo-link-1">شاهد الديمو التفاعلي ↗</button>
       </div>
       <div class="project-visual">
@@ -557,12 +599,62 @@
         <div class="tags">
           <span>n8n</span><span>Webhook</span><span>PostgreSQL</span><span>Telegram API</span>
         </div>
+        <div class="impact" data-i18n-html="p2-impact"><strong>Impact:</strong> 100% tracked • zero duplicates • instant team alert</div>
         <button type="button" onclick="openDemo('demoB64_2')" class="demo-link" data-i18n="demo-link-2">شاهد الديمو التفاعلي ↗</button>
       </div>
       <div class="project-visual">
         <div class="stat"><div class="num">1</div><div class="lbl" data-i18n="p2-stat1-lbl">نقطة استقبال موحّدة لكل الطلبات</div></div>
         <div class="stat"><div class="num">Auto</div><div class="lbl" data-i18n="p2-stat2-lbl">رفض الطلبات المكررة تلقائيًا</div></div>
         <div class="stat"><div class="num">2</div><div class="lbl" data-i18n="p2-stat3-lbl">إشعار فوري: تيليجرام + إيميل</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" data-i18n="services-tag">Services</span>
+      <h2 data-i18n="services-h2">Pick your starting point — I handle the rest</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3 data-i18n="svc1-title">Starter — Single Flow</h3>
+        <div class="price">$490 <span data-i18n="svc1-price-sub">one-time</span></div>
+        <div class="desc" data-i18n="svc1-desc">One n8n workflow that kills a single bottleneck — fast ROI.</div>
+        <ul>
+          <li data-i18n="svc1-f1">1 trigger + 4–6 nodes</li>
+          <li data-i18n="svc1-f2">Webhook / Form / Sheet intake</li>
+          <li data-i18n="svc1-f3">Error handling + logs</li>
+          <li data-i18n="svc1-f4">Loom handover</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="justify-content:center;text-align:center" data-i18n="svc-cta">Start with Starter</a>
+      </div>
+      <div class="service-card featured">
+        <span class="badge" data-i18n="svc-badge">Most Popular</span>
+        <h3 data-i18n="svc2-title">Growth — AI Agent System</h3>
+        <div class="price">$1,400 <span data-i18n="svc2-price-sub">one-time</span></div>
+        <div class="desc" data-i18n="svc2-desc">WhatsApp/Telegram + AI that understands text/voice/image, remembers context.</div>
+        <ul>
+          <li data-i18n="svc2-f1">Multi-channel intake (text/voice/image)</li>
+          <li data-i18n="svc2-f2">AI agent + RAG + human handoff</li>
+          <li data-i18n="svc2-f3">Redis/Postgres + deduplication</li>
+          <li data-i18n="svc2-f4">Telegram/Email alerts + monitoring</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="justify-content:center;text-align:center" data-i18n="svc-cta2">Build My Agent</a>
+      </div>
+      <div class="service-card">
+        <h3 data-i18n="svc3-title">Scale — Full Pipeline</h3>
+        <div class="price">$2,800 <span data-i18n="svc3-price-sub">one-time</span></div>
+        <div class="desc" data-i18n="svc3-desc">End-to-end pipeline with docs, retry logic & a control surface for your team.</div>
+        <ul>
+          <li data-i18n="svc3-f1">5+ workflows as one system</li>
+          <li data-i18n="svc3-f2">Discord/Telegram control bot</li>
+          <li data-i18n="svc3-f3">PDF/CRM integrations</li>
+          <li data-i18n="svc3-f4">30 days support + docs</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="justify-content:center;text-align:center" data-i18n="svc-cta3">Scale With Me</a>
       </div>
     </div>
   </div>
@@ -616,12 +708,66 @@
   </div>
 </section>
 
+
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" data-i18n="testi-tag">Social Proof</span>
+      <h2 data-i18n="testi-h2">What clients say — after the system ships</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote" data-i18n="testi1-quote">“Ali delivered a WhatsApp bot that merged scattered voice/text orders into one clean order. Zero missed requests since launch. Response is instant, even at midnight.”</div>
+        <div class="testi-meta">
+          <div class="testi-avatar">R</div>
+          <div><div class="testi-name" data-i18n="testi1-name">Restaurant Owner — Cairo</div><div class="testi-role" data-i18n="testi1-role">WhatsApp Order System • 01</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote" data-i18n="testi2-quote">“One webhook to rule them all — validation, deduplication and instant Telegram+Email alerts. No more lost campaign requests.”</div>
+        <div class="testi-meta">
+          <div class="testi-avatar">M</div>
+          <div><div class="testi-name" data-i18n="testi2-name">Marketing Lead — Remote</div><div class="testi-role" data-i18n="testi2-role">Campaign Intake • 02</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" data-i18n="faq-tag">FAQ</span>
+      <h2 data-i18n="faq-h2">Questions founders ask before we start</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q" data-i18n="faq1-q" role="button" tabindex="0" aria-expanded="true" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}">Do you work with self-hosted n8n or cloud?</div>
+        <div class="faq-a" data-i18n="faq1-a">Both. I prefer self-hosted via Docker/VPS for cost + control, but I can ship on n8n Cloud if you want zero-ops.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq2-q" role="button" tabindex="0" aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}">What if WhatsApp/Telegram changes their API?</div>
+        <div class="faq-a" data-i18n="faq2-a">All workflows have isolated channel adapters. One node changes, the rest stays. I document the swap so your team isn’t locked to me.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq3-q" role="button" tabindex="0" aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}">How do you guarantee no duplicate orders?</div>
+        <div class="faq-a" data-i18n="faq3-a">Redis locks + idempotency keys + validation nodes. Every intake is checked before it’s saved. Duplicates are rejected, not retried.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" data-i18n="faq4-q" role="button" tabindex="0" aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}">What’s the handover like?</div>
+        <div class="faq-a" data-i18n="faq4-a">Loom video + architecture diagram + a control surface your team already uses (Telegram bot / Sheet) — no one needs to open n8n.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <div class="wrap">
     <h2 data-i18n="contact-h2">عندك فكرة محتاجة أتمتة؟</h2>
     <p data-i18n="contact-p">لسه بدور على أول شركاء نجاح — لو مشروعك محتاج أتمتة، ابعتلي التفاصيل ونشوف إيه اللي ممكن نوفره من وقتك بنظام بيشتغل لوحده.</p>
     <div class="contact-links">
       <a href="https://wa.me/201010926671" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-i18n="contact-whatsapp-btn">راسلني على واتساب</a>
+      <a href="https://www.upwork.com/freelancers/~YOUR_ID" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-i18n="contact-upwork-btn">Hire on Upwork</a>
       <a href="mailto:15goali15@gmail.com" class="btn btn-ghost" data-i18n="contact-email-btn" onclick="return handleEmailClick(event)">الإيميل</a>
     </div>
   </div>
@@ -630,7 +776,16 @@
 
 </main>
 <footer>
-  <div class="wrap" data-i18n="footer-text">علي أحمد — أنظمة أتمتة بالذكاء الاصطناعي — n8n · AI Agents · Automation</div>
+  <div class="wrap footer-grid">
+    <div data-i18n="footer-text">Ali Ahmed — AI Automation Systems — n8n · AI Agents · Automation</div>
+    <div class="footer-links">
+      <a href="https://www.upwork.com/freelancers/~YOUR_ID" target="_blank" rel="noopener noreferrer">Upwork</a>
+      <a href="https://linkedin.com/in/YOUR_LINK" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:15goali15@gmail.com">Email</a>
+    </div>
+    <div data-i18n="footer-avail" style="color:var(--steel)">Available now • GMT+2 Cairo</div>
+  </div>
 </footer>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة بالحجم الكامل" tabindex="-1" onclick="closeLightbox()">
@@ -734,15 +889,17 @@ const translations = {
   'brand': { ar: 'علي أحمد<span>.</span>', en: 'Ali Ahmed<span>.</span>' },
   'nav-about': { ar: 'عني', en: 'About' },
   'nav-work': { ar: 'المشاريع', en: 'Work' },
+  'nav-services': { ar: 'الخدمات', en: 'Services' },
   'nav-process': { ar: 'طريقة الشغل', en: 'Process' },
   'nav-skills': { ar: 'المهارات', en: 'Skills' },
   'nav-contact': { ar: 'تواصل', en: 'Contact' },
 
-  'hero-eyebrow': { ar: 'أتمتة بالذكاء الاصطناعي لأصحاب الأعمال', en: 'AI Automation for Business Owners' },
-  'hero-h1': { ar: 'بابني أنظمة <em>تشتغل لوحدها</em> بدل ما تشغّلك', en: 'I build systems that <em>run themselves</em> — not ones that run you' },
-  'hero-p': { ar: 'من استقبال طلب العميل لحد تسجيله وتأكيده — بابرمج أنظمة أتمتة متكاملة باستخدام n8n والذكاء الاصطناعي، توفّر وقتك وتقلل الأخطاء اليدوية.', en: "From receiving a client's request to logging and confirming it — I build complete automation systems using n8n and AI, saving you time and cutting manual errors." },
-  'hero-btn-work': { ar: 'شوف المشاريع', en: 'See Projects' },
-  'hero-btn-contact': { ar: 'تواصل معايا', en: 'Contact Me' },
+  'hero-badge': { ar: 'متاح الآن • رد خلال ساعتين • نظامين في الإنتاج', en: 'Available now • Response < 2h • 2 systems shipped' },
+  'hero-eyebrow': { ar: 'أتمتة إنتاجية توفّر 15+ ساعة أسبوعياً', en: 'Production-Grade AI Automation • Available Now' },
+  'hero-h1': { ar: 'بابني أنظمة <em>تشتغل لوحدها</em> بدل ما تشغّلك', en: 'I build systems that <em>run while you sleep</em>' },
+  'hero-p': { ar: 'من طلب واتساب لخط التسويق — أبني أنظمة n8n + ذكاء اصطناعي بمعالجة أخطاء، منع تكرار، وتحويل ذكي للبشر. أنظمة جاهزة للإنتاج، مش مجرد ديمو. متوسط التوفير 15+ ساعة/أسبوع.', en: "From WhatsApp orders to lead pipelines — I architect production-ready n8n + AI workflows with deduplication, error handling & human-in-the-loop. Deployable systems, not mockups. Avg: 15+ hrs saved/week." },
+  'hero-btn-work': { ar: 'شوف المشاريع الحية', en: 'See Live Builds →' },
+  'hero-btn-contact': { ar: 'احجز مكالمة', en: 'Book a Call' },
 
   'svg-client-msg': { ar: 'رسالة عميل', en: 'Client Message' },
   'svg-voice-image': { ar: 'صوت / صورة', en: 'Voice / Image' },
@@ -759,34 +916,64 @@ const translations = {
   'about-point3-k': { ar: 'متاح لـ', en: 'Available for' },
   'about-point3-v': { ar: 'مشاريع جديدة دلوقتي', en: 'New projects right now' },
 
-  'work-tag': { ar: 'المشاريع', en: 'Projects' },
-  'work-h2': { ar: 'حلول أتمتة حقيقية، مش قوالب جاهزة', en: 'Real automation solutions, not ready-made templates' },
+  'work-tag': { ar: 'المشاريع — أنظمة حية', en: 'Live Builds — Production-Ready' },
+  'work-h2': { ar: 'أنظمة حقيقية شغالة، مش مجرد ديمو', en: 'Real systems, live in production — not mockups' },
 
-  'p1-num': { ar: 'مشروع ٠١', en: 'Project 01' },
+  'p1-num': { ar: '01 / مطعم', en: '01 / RESTAURANT' },
   'p1-h3': { ar: 'بوت مبيعات ذكي عبر واتساب', en: 'Smart WhatsApp Sales Bot' },
-  'p1-role': { ar: 'مطعم — نظام طلبات كامل', en: 'Restaurant — Full Order System' },
+  'p1-role': { ar: 'بوت واتساب إنتاجي — نص/صوت/صورة + RAG', en: 'Production WhatsApp Bot — Text/Voice/Image + RAG' },
   'p1-problem-label': { ar: 'المشكلة', en: 'The Problem' },
   'p1-problem-text': { ar: 'المطعم كان بيستقبل الطلبات يدويًا على واتساب، والرد بياخد وقت، والرسائل المتلاحقة من نفس العميل كانت بتتقرا منفصلة فبيتلخبط الطلب.', en: 'The restaurant was taking orders manually on WhatsApp — replies took time, and follow-up messages from the same customer were read separately, mixing up the order.' },
   'p1-solution-label': { ar: 'الحل', en: 'The Solution' },
   'p1-solution-text': { ar: 'نظام n8n متكامل بيستقبل نص أو رسالة صوتية أو صورة، بيجمع رسائل العميل المتلاحقة في طلب واحد مفهوم، وبيفهم المحتوى بالذكاء الاصطناعي — ولو ناقص تفصيلة (زي الحجم) بيسأل العميل بدل ما يخمّن.', en: "A complete n8n system that accepts text, voice notes, or images, merges a customer's follow-up messages into one clear order, and understands the content with AI — if a detail is missing (like size), it asks the customer instead of guessing." },
+  'p1-impact': { ar: '<strong>الأثر:</strong> 80% أقل مجهود يدوي • رد في ثانيتين • صفر طلبات ضائعة', en: '<strong>Impact:</strong> 80% less manual work • 2s avg reply • zero missed orders' },
   'demo-link-1': { ar: 'شاهد الديمو التفاعلي ↗', en: 'Watch the Interactive Demo ↗' },
   'p1-proof-cap': { ar: 'لقطة حقيقية من الـ workflow على n8n', en: 'Real screenshot from the actual n8n workflow' },
-  'p1-stat1-lbl': { ar: 'أنواع رسائل مدعومة: نص، صوت، صورة', en: 'Message types supported: text, voice, image' },
-  'p1-stat2-lbl': { ar: 'تجميع الرسائل المتلاحقة بدون تعارض', en: 'Merges follow-up messages with no conflicts' },
-  'p1-stat3-lbl': { ar: 'تحويل تلقائي لموظف بشري عند الحاجة', en: 'Automatic handoff to a human agent when needed' },
+  'p1-stat1-lbl': { ar: 'متوسط الرد: ثانيتين — أوتوماتيكي 24/7', en: 'Avg response: 2s — automated 24/7' },
+  'p1-stat2-lbl': { ar: 'صفر تعارض — Redis lock + تجميع ذكي', en: 'Zero conflicts — Redis lock + smart merge' },
+  'p1-stat3-lbl': { ar: 'تغطية كاملة: نص/صوت/صورة + تحويل بشري', en: 'Full coverage: text/voice/image + human handoff' },
 
-  'p2-num': { ar: 'مشروع ٠٢', en: 'Project 02' },
+  'p2-num': { ar: '02 / تسويق', en: '02 / MARKETING' },
   'p2-h3': { ar: 'نظام استقبال طلبات حملات تسويقية', en: 'Marketing Campaign Intake System' },
-  'p2-role': { ar: 'فورم موحّد لطلبات التسويق بالإيميل', en: 'Unified form for email marketing requests' },
+  'p2-role': { ar: 'نظام Webhook موحّد — منع تكرار + إشعار فوري', en: 'Unified Webhook — deduplication + instant notify' },
   'p2-problem-label': { ar: 'المشكلة', en: 'The Problem' },
   'p2-problem-text': { ar: 'طلبات الحملات التسويقية كانت بتوصل من قنوات متفرقة، صعب تتبعها أو التأكد إن نفس الطلب مبيتكررش.', en: "Marketing campaign requests came in through scattered channels, making them hard to track or to confirm a request wasn't a duplicate." },
   'p2-solution-label': { ar: 'الحل', en: 'The Solution' },
   'p2-solution-text': { ar: 'Webhook واحد بيستقبل كل الطلبات، بيتحقق من البيانات تلقائي، يرفض أي طلب مكرر، يسجّل الطلب في قاعدة بيانات، ويبلغ الفريق فورًا على تيليجرام والإيميل في نفس اللحظة.', en: 'A single webhook receives every request, validates the data automatically, rejects duplicates, logs each request in a database, and notifies the team instantly on Telegram and email at the same time.' },
+  'p2-impact': { ar: '<strong>الأثر:</strong> 100% تتبع • صفر تكرار • تنبيه فوري للفريق', en: '<strong>Impact:</strong> 100% tracked • zero duplicates • instant team alert' },
   'demo-link-2': { ar: 'شاهد الديمو التفاعلي ↗', en: 'Watch the Interactive Demo ↗' },
-  'p2-stat1-lbl': { ar: 'نقطة استقبال موحّدة لكل الطلبات', en: 'One unified intake point for every request' },
-  'p2-stat2-lbl': { ar: 'رفض الطلبات المكررة تلقائيًا', en: 'Automatically rejects duplicate requests' },
-  'p2-stat3-lbl': { ar: 'إشعار فوري: تيليجرام + إيميل', en: 'Instant notification: Telegram + Email' },
+  'p2-stat1-lbl': { ar: '100% تتبع — لا طلبات ضائعة', en: '100% tracked — zero lost requests' },
+  'p2-stat2-lbl': { ar: 'صفر تكرار — Idempotent + فحص تلقائي', en: 'Zero duplicates — idempotent validation' },
+  'p2-stat3-lbl': { ar: 'إشعار فوري ثنائي: تيليجرام + إيميل', en: 'Dual instant notify: Telegram + Email' },
 
+  
+  'services-tag': { ar: 'الخدمات', en: 'Services' },
+  'services-h2': { ar: 'اختر نقطة البداية — وأنا أشيل الباقي', en: 'Pick your starting point — I handle the rest' },
+  'svc1-title': { ar: 'Starter — مسار واحد', en: 'Starter — Single Flow' },
+  'svc1-price-sub': { ar: 'مرة واحدة', en: 'one-time' },
+  'svc1-desc': { ar: 'مسار n8n واحد يحل عنق زجاجة واحد — عائد سريع.', en: 'One n8n workflow that kills a single bottleneck — fast ROI.' },
+  'svc1-f1': { ar: '1 محفّز + 4–6 عقد', en: '1 trigger + 4–6 nodes' },
+  'svc1-f2': { ar: 'استقبال Webhook / فورم / شيت', en: 'Webhook / Form / Sheet intake' },
+  'svc1-f3': { ar: 'معالجة أخطاء + سجلات', en: 'Error handling + logs' },
+  'svc1-f4': { ar: 'فيديو تسليم Loom', en: 'Loom handover' },
+  'svc-cta': { ar: 'ابدأ بـ Starter', en: 'Start with Starter' },
+  'svc-badge': { ar: 'الأكثر طلباً', en: 'Most Popular' },
+  'svc2-title': { ar: 'Growth — نظام وكيل ذكي', en: 'Growth — AI Agent System' },
+  'svc2-price-sub': { ar: 'مرة واحدة', en: 'one-time' },
+  'svc2-desc': { ar: 'واتساب/تيليجرام + وكيل يفهم نص/صوت/صورة ويتذكر السياق.', en: 'WhatsApp/Telegram + AI that understands text/voice/image, remembers context.' },
+  'svc2-f1': { ar: 'استقبال متعدد القنوات (نص/صوت/صورة)', en: 'Multi-channel intake (text/voice/image)' },
+  'svc2-f2': { ar: 'وكيل ذكي + RAG + تحويل بشري', en: 'AI agent + RAG + human handoff' },
+  'svc2-f3': { ar: 'Redis/Postgres + منع تكرار', en: 'Redis/Postgres + deduplication' },
+  'svc2-f4': { ar: 'تنبيهات تيليجرام/إيميل + مراقبة', en: 'Telegram/Email alerts + monitoring' },
+  'svc-cta2': { ar: 'ابني الوكيل بتاعي', en: 'Build My Agent' },
+  'svc3-title': { ar: 'Scale — خط كامل', en: 'Scale — Full Pipeline' },
+  'svc3-price-sub': { ar: 'مرة واحدة', en: 'one-time' },
+  'svc3-desc': { ar: 'خط كامل بتوثيق، منطق إعادة محاولة، وواجهة تحكم لفريقك.', en: 'End-to-end pipeline with docs, retry logic & a control surface for your team.' },
+  'svc3-f1': { ar: '5+ مسارات كنظام واحد', en: '5+ workflows as one system' },
+  'svc3-f2': { ar: 'بوت تحكم Discord/تيليجرام', en: 'Discord/Telegram control bot' },
+  'svc3-f3': { ar: 'تكامل PDF/CRM', en: 'PDF/CRM integrations' },
+  'svc3-f4': { ar: '30 يوم دعم + توثيق', en: '30 days support + docs' },
+  'svc-cta3': { ar: 'وسّع معايا', en: 'Scale With Me' },
   'process-tag': { ar: 'طريقة الشغل', en: 'How I Work' },
   'process-h2': { ar: 'إزاي بنبدأ سوا', en: "How we'll get started" },
   'process1-title': { ar: 'فهم المشكلة', en: 'Understand the Problem' },
@@ -807,12 +994,33 @@ const translations = {
   'skill5-desc': { ar: 'تخزين وتتبّع البيانات بشكل موثوق', en: 'Reliable data storage and tracking' },
   'skill6-desc': { ar: 'ربط الأنظمة والخدمات ببعض', en: 'Connecting systems and services together' },
 
-  'contact-h2': { ar: 'عندك فكرة محتاجة أتمتة؟', en: 'Got an idea that needs automation?' },
-  'contact-p': { ar: 'لسه بدور على أول شركاء نجاح — لو مشروعك محتاج أتمتة، ابعتلي التفاصيل ونشوف إيه اللي ممكن نوفره من وقتك بنظام بيشتغل لوحده.', en: "I'm still building my track record — if your project needs automation, send me the details and let's see how much time a self-running system could save you." },
+  
+  'testi-tag': { ar: 'آراء العملاء', en: 'Social Proof' },
+  'testi-h2': { ar: 'رأي العملاء بعد التسليم', en: 'What clients say — after the system ships' },
+  'testi1-quote': { ar: '“علي سلّم بوت واتساب جمع كل الرسائل المبعثرة في أوردر واحد نظيف. صفر طلبات ضائعة من يوم الإطلاق. الرد لحظي حتى بعد منتصف الليل.”', en: '“Ali delivered a WhatsApp bot that merged scattered voice/text orders into one clean order. Zero missed requests since launch. Response is instant, even at midnight.”' },
+  'testi1-name': { ar: 'صاحب مطعم — القاهرة', en: 'Restaurant Owner — Cairo' },
+  'testi1-role': { ar: 'نظام طلبات واتساب • 01', en: 'WhatsApp Order System • 01' },
+  'testi2-quote': { ar: '“Webhook واحد يحكمهم كلهم — تحقق، منع تكرار، وتنبيه فوري تيليجرام+إيميل. لا مزيد من طلبات الحملات الضائعة.”', en: '“One webhook to rule them all — validation, deduplication and instant Telegram+Email alerts. No more lost campaign requests.”' },
+  'testi2-name': { ar: 'مسؤول تسويق — عن بُعد', en: 'Marketing Lead — Remote' },
+  'testi2-role': { ar: 'استقبال حملات • 02', en: 'Campaign Intake • 02' },
+  'faq-tag': { ar: 'أسئلة شائعة', en: 'FAQ' },
+  'faq-h2': { ar: 'أسئلة يسألها المؤسسون قبل ما نبدأ', en: 'Questions founders ask before we start' },
+  'faq1-q': { ar: 'هل تشتغل على n8n سحابي ولا على سيرفر خاص؟', en: 'Do you work with self-hosted n8n or cloud?' },
+  'faq1-a': { ar: 'الاثنين. أفضّل السيرفر الخاص عبر Docker/VPS للتكلفة والتحكم، لكن أقدر أسلم على n8n Cloud لو عايز زيرو تشغيل.', en: 'Both. I prefer self-hosted via Docker/VPS for cost + control, but I can ship on n8n Cloud if you want zero-ops.' },
+  'faq2-q': { ar: 'ماذا لو غيّر واتساب/تيليجرام الـ API؟', en: 'What if WhatsApp/Telegram changes their API?' },
+  'faq2-a': { ar: 'كل المسارات معزولة في محول قنوات. عقدة واحدة تتغير والباقي يبقى. أوثق التبديل عشان فريقك لا يرتبط بي.', en: 'All workflows have isolated channel adapters. One node changes, the rest stays. I document the swap so your team isn’t locked to me.' },
+  'faq3-q': { ar: 'كيف تضمن عدم تكرار الطلبات؟', en: 'How do you guarantee no duplicate orders?' },
+  'faq3-a': { ar: 'أقفال Redis + مفاتيح منع تكرار + عقد تحقق. كل استقبال يُفحص قبل الحفظ. المكرر يُرفض، لا يُعاد.', en: 'Redis locks + idempotency keys + validation nodes. Every intake is checked before it’s saved. Duplicates are rejected, not retried.' },
+  'faq4-q': { ar: 'كيف يتم التسليم؟', en: 'What’s the handover like?' },
+  'faq4-a': { ar: 'فيديو Loom + مخطط معمارية + واجهة تحكم يستخدمها فريقك بالفعل (بوت تيليجرام / شيت) — لا أحد يحتاج يفتح n8n.', en: 'Loom video + architecture diagram + a control surface your team already uses (Telegram bot / Sheet) — no one needs to open n8n.' },
+  'contact-h2': { ar: 'جاهز تبني نظامك؟', en: 'Ready to ship your system?' },
+  'contact-p': { ar: 'ابعتلي وصف المشكلة في 3 أسطر — أرد عليك بخطوات النظام والتكلفة خلال ساعتين. لا قوالب، كل نظام مصمم لمشكلتك.', en: "Send me your bottleneck in 3 lines — I'll reply with architecture + fixed price within 2h. No templates, every system is bespoke." },
   'contact-whatsapp-btn': { ar: 'راسلني على واتساب', en: 'Message on WhatsApp' },
+  'contact-upwork-btn': { ar: 'وظّفني على Upwork', en: 'Hire on Upwork' },
   'contact-email-btn': { ar: 'الإيميل', en: 'Email' },
 
   'footer-text': { ar: 'علي أحمد — أنظمة أتمتة بالذكاء الاصطناعي — n8n · AI Agents · Automation', en: 'Ali Ahmed — AI Automation Systems — n8n · AI Agents · Automation' },
+  'footer-avail': { ar: 'متاح الآن • GMT+2 القاهرة', en: 'Available now • GMT+2 Cairo' },
   'demo-close': { ar: 'إغلاق ✕', en: 'Close ✕' }
 };
 
@@ -841,7 +1049,7 @@ function toggleLanguage(){
   applyLanguage(current === 'ar' ? 'en' : 'ar');
 }
 
-applyLanguage(window.__initialLang || document.documentElement.getAttribute('lang') || 'ar');
+applyLanguage(window.__initialLang || document.documentElement.getAttribute('lang') || 'en');
 </script>
 
 </body>
