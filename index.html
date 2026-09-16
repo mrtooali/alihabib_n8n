@@ -397,6 +397,9 @@
   @media(max-width:520px){.process-grid{grid-template-columns:1fr} .skills-grid{grid-template-columns:1fr}}
   /* --- FIX: lightbox close btn --- */
   .lightbox-close{position:absolute;top:20px;inset-inline-end:20px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 12px;border-radius:20px;cursor:pointer;font-family:inherit}
+  /* --- FIX: email toast --- */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1f28;border:1px solid #2b323d;color:#e9e6df;padding:10px 18px;border-radius:8px;font-size:13px;z-index:90;opacity:0;transition:transform .3s ease,opacity .3s ease;pointer-events:none}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 </style>
 
@@ -619,10 +622,11 @@
     <p data-i18n="contact-p">لسه بدور على أول شركاء نجاح — لو مشروعك محتاج أتمتة، ابعتلي التفاصيل ونشوف إيه اللي ممكن نوفره من وقتك بنظام بيشتغل لوحده.</p>
     <div class="contact-links">
       <a href="https://wa.me/201010926671" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-i18n="contact-whatsapp-btn">راسلني على واتساب</a>
-      <a href="mailto:15goali15@gmail.com" class="btn btn-ghost" data-i18n="contact-email-btn">الإيميل</a>
+      <a href="mailto:15goali15@gmail.com" class="btn btn-ghost" data-i18n="contact-email-btn" onclick="return handleEmailClick(event)">الإيميل</a>
     </div>
   </div>
 </section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 </main>
 <footer>
@@ -705,6 +709,25 @@ document.addEventListener('keydown', function(e){
     if(document.getElementById('lightbox').classList.contains('open')) closeLightbox();
   }
 });
+function handleEmailClick(e){
+  try{
+    var email='15goali15@gmail.com';
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(email); }
+    var toast=document.getElementById('toast');
+    var isAr=document.documentElement.getAttribute('lang')==='ar';
+    toast.textContent=isAr ? 'تم نسخ الإيميل: '+email : 'Email copied: '+email;
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+    // حاول تفتح mailto وكمان افتح جيميل كـ fallback
+    setTimeout(function(){ window.location.href='mailto:'+email; }, 200);
+    setTimeout(function(){
+      var gmail='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(email);
+      window.open(gmail, '_blank', 'noopener');
+    }, 600);
+  }catch(err){}
+  if(e) e.preventDefault();
+  return false;
+}
 
 
 const translations = {
